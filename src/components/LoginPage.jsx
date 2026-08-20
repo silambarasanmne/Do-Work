@@ -156,6 +156,33 @@ export default function LoginPage({ onLogin, showToast, employees = [] }) {
           </button>
         </form>
 
+        {/* Single Quick Login Button */}
+        <div className="mt-5 pt-4 border-t border-slate-200/60 text-center">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('silam@agam.com');
+              setPassword('admin123');
+              setError('');
+            }}
+            className="w-full p-2.5 rounded-xl glass hover:bg-white text-left border border-slate-200/80 transition-all flex items-center justify-between min-h-[44px] active:scale-95 group shadow-xs"
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="text-lg">👨‍💻</span>
+              <div>
+                <div className="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                  <span>Silambarasan</span>
+                  <span className="text-[9px] bg-[#96a01d] text-slate-950 px-1.5 py-0.2 rounded font-extrabold">ADMIN</span>
+                </div>
+                <div className="text-[10px] text-slate-500 font-medium">silam@agam.com</div>
+              </div>
+            </div>
+            <span className="text-xs font-extrabold text-[#7a8315] group-hover:underline">
+              Quick Fill ⚡
+            </span>
+          </button>
+        </div>
+
       </div>
     </div>
   );
