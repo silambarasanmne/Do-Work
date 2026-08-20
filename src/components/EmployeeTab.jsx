@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { UserPlus, Search, Edit2, Power, UserCheck, Mail, Briefcase, Building2, X, Eye, Calendar, FolderGit2 } from 'lucide-react';
+import { UserPlus, Search, Edit2, Power, UserCheck, Mail, Briefcase, Building2, X, Eye, EyeOff, FolderGit2, Trash2 } from 'lucide-react';
 
 export default function EmployeeTab({ 
   employees, 
   onAddEmployee, 
   onUpdateEmployee, 
   onToggleStatus, 
+  onDeleteEmployee,
   currentUser, 
   showToast 
 }) {
@@ -14,14 +15,38 @@ export default function EmployeeTab({
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingEmp, setEditingEmp] = useState(null);
   const [viewingEmp, setViewingEmp] = useState(null);
+  const [deletingEmp, setDeletingEmp] = useState(null);
 
   // Form states for Add/Edit
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showViewPassword, setShowViewPassword] = useState(false);
   const [role, setRole] = useState('Full Stack Developer');
   const [department, setDepartment] = useState('Engineering');
   const [status, setStatus] = useState('Active');
   const [assignedProjectInput, setAssignedProjectInput] = useState('AGAM Workspace');
+
+  const handleDeleteClick = (emp) => {
+    if (!currentUser?.isAdmin) {
+      showToast('Admin Access Required', 'Only Admin accounts can delete employee records.', 'error');
+      return;
+    }
+    setDeletingEmp(emp);
+  };
+
+  const confirmDelete = () => {
+    if (!deletingEmp) return;
+    if (onDeleteEmployee) {
+      onDeleteEmployee(deletingEmp.id);
+    }
+    showToast('Employee Deleted', `${deletingEmp.name} removed from directory`, 'success');
+    if (viewingEmp?.id === deletingEmp.id) {
+      setViewingEmp(null);
+    }
+    setDeletingEmp(null);
+  };
 
   const filteredEmployees = employees.filter((e) => {
     const matchesSearch = e.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -39,6 +64,7 @@ export default function EmployeeTab({
     }
     setName('');
     setEmail('');
+    setPassword('');
     setRole('Full Stack Developer');
     setDepartment('Engineering');
     setStatus('Active');
@@ -54,6 +80,7 @@ export default function EmployeeTab({
     setEditingEmp(emp);
     setName(emp.name);
     setEmail(emp.email);
+    setPassword(emp.password || '123456');
     setRole(emp.role);
     setDepartment(emp.department);
     setStatus(emp.status);
@@ -68,6 +95,7 @@ export default function EmployeeTab({
       id: `EMP-${Math.floor(100 + Math.random() * 900)}`,
       name,
       email,
+      password: password || '123456',
       role,
       department,
       status,
@@ -88,6 +116,7 @@ export default function EmployeeTab({
     onUpdateEmployee(editingEmp.id, {
       name,
       email,
+      password,
       role,
       department,
       status,
@@ -116,25 +145,25 @@ export default function EmployeeTab({
         </div>
 
         {/* Search & Filter Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           
           {/* Search Box */}
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full sm:w-64">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name, role, email..."
-              className="w-full glass-input rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[36px]"
+              className="w-full glass-input rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[40px]"
             />
           </div>
 
           {/* Status Filter */}
-          <div className="flex items-center gap-1 glass p-0.5 rounded-lg text-xs bg-white/70">
+          <div className="flex items-center gap-1 glass p-1 rounded-xl text-xs bg-white/70 justify-between sm:justify-start">
             <button
               onClick={() => setFilterStatus('all')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterStatus === 'all' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -142,7 +171,7 @@ export default function EmployeeTab({
             </button>
             <button
               onClick={() => setFilterStatus('active')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterStatus === 'active' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -150,7 +179,7 @@ export default function EmployeeTab({
             </button>
             <button
               onClick={() => setFilterStatus('inactive')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterStatus === 'inactive' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -160,7 +189,7 @@ export default function EmployeeTab({
 
           <button
             onClick={handleOpenAdd}
-            className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 transition-all flex items-center gap-1 min-h-[36px]"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 transition-all flex items-center justify-center gap-1.5 min-h-[40px]"
           >
             <UserPlus className="w-4 h-4" />
             <span>Add Employee</span>
@@ -244,7 +273,7 @@ export default function EmployeeTab({
             <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between gap-1.5">
               <button
                 onClick={() => setViewingEmp(emp)}
-                className="py-1.5 px-2 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-[11px] border border-slate-200 shadow-xs flex items-center justify-center gap-1 min-h-[36px]"
+                className="py-1.5 px-2 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-[11px] border border-slate-200 shadow-xs flex items-center justify-center gap-1 min-h-[36px] flex-1"
                 title="View Employee Profile"
               >
                 <Eye className="w-3 h-3 text-slate-600" />
@@ -253,7 +282,7 @@ export default function EmployeeTab({
 
               <button
                 onClick={() => handleOpenEdit(emp)}
-                className="py-1.5 px-2 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-[11px] border border-slate-200 shadow-xs flex items-center justify-center gap-1 min-h-[36px]"
+                className="py-1.5 px-2 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold text-[11px] border border-slate-200 shadow-xs flex items-center justify-center gap-1 min-h-[36px] flex-1"
               >
                 <Edit2 className="w-3 h-3 text-slate-600" />
                 <span>Edit</span>
@@ -272,14 +301,24 @@ export default function EmployeeTab({
                     emp.status === 'Active' ? 'info' : 'success'
                   );
                 }}
-                className={`py-1.5 px-2 rounded-lg font-bold text-[11px] border shadow-xs flex items-center gap-1 min-h-[36px] ${
+                className={`py-1.5 px-1.5 rounded-lg font-bold text-[11px] border shadow-xs flex items-center justify-center gap-1 min-h-[36px] ${
                   emp.status === 'Active'
-                    ? 'bg-rose-50 hover:bg-rose-100 text-rose-700 border-rose-200'
+                    ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200'
                     : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200'
                 }`}
+                title={emp.status === 'Active' ? 'Deactivate Employee' : 'Activate Employee'}
               >
                 <Power className="w-3 h-3" />
                 <span>{emp.status === 'Active' ? 'Off' : 'On'}</span>
+              </button>
+
+              <button
+                onClick={() => handleDeleteClick(emp)}
+                className="py-1.5 px-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-[11px] border border-rose-200 shadow-xs flex items-center justify-center gap-1 min-h-[36px] active:scale-95 transition-all"
+                title="Delete Employee"
+              >
+                <Trash2 className="w-3 h-3 text-rose-600" />
+                <span className="sr-only xs:not-sr-only">Del</span>
               </button>
             </div>
 
@@ -311,9 +350,23 @@ export default function EmployeeTab({
 
             <div className="space-y-2.5 text-xs text-slate-800">
               <div className="glass p-2.5 rounded-xl border border-white/80 space-y-1.5 bg-white/70">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-slate-500 font-medium">Email:</span>
                   <span className="font-bold text-slate-900">{viewingEmp.email}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-500 font-medium">Password:</span>
+                  <span className="font-mono font-bold text-slate-900 flex items-center gap-1.5 bg-white px-2 py-0.5 rounded border border-slate-200 text-[11px]">
+                    <span>{showViewPassword ? viewingEmp.password || 'dev123' : '••••••••'}</span>
+                    <button
+                      type="button"
+                      onClick={() => setShowViewPassword(!showViewPassword)}
+                      className="p-0.5 text-slate-400 hover:text-slate-700 rounded"
+                      title={showViewPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showViewPassword ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                    </button>
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 font-medium">Role:</span>
@@ -352,10 +405,18 @@ export default function EmployeeTab({
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-200/60 flex justify-end mt-4">
+            <div className="pt-4 border-t border-slate-200/60 flex items-center justify-between mt-4 gap-2">
+              <button
+                onClick={() => handleDeleteClick(viewingEmp)}
+                className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-extrabold text-xs border border-rose-200 shadow-xs flex items-center gap-1.5 min-h-[40px] active:scale-95"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                <span>Delete Employee</span>
+              </button>
+
               <button
                 onClick={() => setViewingEmp(null)}
-                className="px-5 py-2 rounded-xl bg-[#96a01d] text-slate-950 font-extrabold text-xs shadow-xs"
+                className="px-5 py-2 rounded-xl bg-[#96a01d] text-slate-950 font-extrabold text-xs shadow-xs min-h-[40px]"
               >
                 Close Profile
               </button>
@@ -413,6 +474,30 @@ export default function EmployeeTab({
                   placeholder="e.g. ramesh@agam.com"
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-slate-800 font-semibold min-h-[44px]"
                 />
+              </div>
+
+              <div>
+                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block mb-1">
+                  Account Password {!editingEmp && '*'}
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required={!editingEmp}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter login password..."
+                    className="w-full glass-input rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-slate-800 font-semibold min-h-[44px]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="p-2 text-slate-400 hover:text-slate-700 absolute right-2 top-1/2 -translate-y-1/2 rounded-lg"
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -511,6 +596,35 @@ export default function EmployeeTab({
               </div>
             </form>
 
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingEmp && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-3 bg-slate-900/40 backdrop-blur-md animate-in fade-in">
+          <div className="glass-strong rounded-t-3xl sm:rounded-2xl p-4 sm:p-5 border border-white/90 max-w-sm w-full shadow-2xl text-left">
+            <h3 className="text-sm font-extrabold text-slate-900 mb-1 flex items-center gap-1.5">
+              <Trash2 className="w-4 h-4 text-rose-600" />
+              Delete Employee
+            </h3>
+            <p className="text-xs text-slate-600 mb-3">
+              Are you sure you want to remove <strong className="text-slate-900">{deletingEmp.name}</strong> ({deletingEmp.role}) from the employee directory?
+            </p>
+            <div className="flex items-center justify-end gap-2 pb-3 sm:pb-0">
+              <button
+                onClick={() => setDeletingEmp(null)}
+                className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-white/60 min-h-[44px]"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-5 py-2.5 rounded-xl bg-rose-600 text-white font-extrabold text-xs shadow-md shadow-rose-600/30 hover:bg-rose-700 min-h-[44px] active:scale-95"
+              >
+                Delete Permanently
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Sparkles, ChevronDown, Check, ShieldCheck, Menu, X, Plus, LogOut, LogIn, User } from 'lucide-react';
+import { Bell, Sparkles, ChevronDown, Check, ShieldCheck, Menu, X, Plus, LogOut, LogIn } from 'lucide-react';
 
 export default function Header({ 
   projects, 
@@ -8,8 +8,6 @@ export default function Header({
   showToast,
   glowIntensity,
   setGlowIntensity,
-  activeTab,
-  onTabChange,
   onOpenNewProject,
   currentUser,
   onLogout,
@@ -27,23 +25,23 @@ export default function Header({
 
   return (
     <header className="sticky top-1 z-40 px-2 sm:px-4 w-full max-w-full mb-2">
-      <div className="glass-nav rounded-xl px-3 sm:px-4 py-1.5 flex items-center justify-between shadow-sm border border-white/80 transition-all duration-300 w-full">
+      <div className="glass-nav rounded-xl px-2.5 sm:px-4 py-1.5 flex items-center justify-between shadow-sm border border-white/80 transition-all duration-300 w-full">
         
-        {/* Left: Brand Logo & Title */}
-        <div className="flex items-center gap-2">
-          <div className="relative group cursor-pointer" onClick={() => showToast('AGAM System', 'Enterprise Project Lifecycle Workspace active', 'info')}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 flex items-center justify-center font-bold text-sm shadow-xs active:scale-95 transition-transform">
+        {/* Left: Brand Logo & Project Selector */}
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <div className="relative group cursor-pointer shrink-0" onClick={() => showToast('AGAM System', 'Enterprise Project Lifecycle Workspace active', 'info')}>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 flex items-center justify-center font-bold text-xs sm:text-sm shadow-xs active:scale-95 transition-transform">
               ⚡
             </div>
             <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border-2 border-white animate-pulse" />
           </div>
 
-          <div>
+          <div className="shrink-0">
             <div className="flex items-center gap-1">
-              <span className="font-extrabold text-sm tracking-tight text-slate-900 leading-none">
+              <span className="font-extrabold text-xs sm:text-sm tracking-tight text-slate-900 leading-none">
                 AGAM
               </span>
-              <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded-full bg-[#96a01d]/25 text-slate-950 border border-[#96a01d]/40 leading-none">
+              <span className="text-[8px] sm:text-[9px] font-extrabold px-1 sm:px-1.5 py-0.2 rounded-full bg-[#96a01d]/25 text-slate-950 border border-[#96a01d]/40 leading-none">
                 PRO
               </span>
             </div>
@@ -51,23 +49,23 @@ export default function Header({
           </div>
 
           {/* Vertical Divider */}
-          <div className="h-4 w-[1px] bg-slate-200/80 mx-1 hidden md:block" />
+          <div className="h-4 w-[1px] bg-slate-200/80 mx-0.5 sm:mx-1 hidden xs:block" />
 
           {/* Project Selector Dropdown Button */}
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 sm:py-1 rounded-lg bg-white/80 hover:bg-white border border-white/90 text-xs font-semibold text-slate-800 shadow-xs transition-all min-h-[36px] sm:min-h-[30px]"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-white/80 hover:bg-white border border-white/90 text-xs font-semibold text-slate-800 shadow-xs transition-all min-h-[34px] sm:min-h-[30px]"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#96a01d] animate-ping" />
-              <span className="truncate max-w-[100px] sm:max-w-[120px] md:max-w-[180px] text-slate-900 font-bold text-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#96a01d] animate-ping shrink-0" />
+              <span className="truncate max-w-[85px] xs:max-w-[110px] sm:max-w-[140px] md:max-w-[180px] text-slate-900 font-bold text-[11px] sm:text-xs">
                 {activeProject?.name || 'Select Project'}
               </span>
               <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             </button>
 
             {dropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-60 glass-strong rounded-xl p-1.5 shadow-xl border border-white/90 z-50 animate-in fade-in max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 mt-1 w-64 glass-strong rounded-xl p-1.5 shadow-xl border border-white/90 z-50 animate-in fade-in max-h-64 overflow-y-auto">
                 <div className="px-2.5 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   Active Projects
                 </div>
@@ -79,14 +77,14 @@ export default function Header({
                       setDropdownOpen(false);
                       showToast('Switched Project', `Now managing ${proj.name}`, 'info');
                     }}
-                    className={`w-full text-left px-2.5 py-2 rounded-lg text-xs flex items-center justify-between min-h-[40px] transition-colors ${
+                    className={`w-full text-left px-2.5 py-2 rounded-lg text-xs flex items-center justify-between min-h-[44px] sm:min-h-[40px] transition-colors ${
                       activeProject?.id === proj.id 
                         ? 'bg-[#96a01d]/25 text-slate-950 font-extrabold border border-[#96a01d]/40' 
                         : 'hover:bg-white/80 text-slate-700'
                     }`}
                   >
-                    <div>
-                      <div className="font-bold text-xs">{proj.name}</div>
+                    <div className="truncate mr-2">
+                      <div className="font-bold text-xs truncate">{proj.name}</div>
                       <div className="text-[9px] text-slate-500">{proj.category}</div>
                     </div>
                     {activeProject?.id === proj.id && (
@@ -127,7 +125,7 @@ export default function Header({
             </button>
 
             {notifOpen && (
-              <div className="absolute top-full right-0 mt-1 w-56 glass-strong rounded-lg p-1.5 shadow-lg border border-white/90 z-50 animate-in fade-in">
+              <div className="absolute top-full right-0 mt-1 w-60 glass-strong rounded-lg p-2 shadow-lg border border-white/90 z-50 animate-in fade-in">
                 <div className="flex items-center justify-between pb-1 border-b border-slate-200/50 mb-1">
                   <span className="text-[11px] font-bold text-slate-800">Notifications</span>
                   <span className="text-[8px] px-1.5 py-0.2 bg-[#96a01d]/20 text-slate-950 rounded-full font-extrabold border border-[#96a01d]/40">3 New</span>
@@ -161,7 +159,7 @@ export default function Header({
               <button
                 onClick={onLogout}
                 title="Log Out"
-                className="p-1.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors ml-1"
+                className="p-1.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors ml-1 min-h-[30px] min-w-[30px] flex items-center justify-center"
               >
                 <LogOut className="w-3.5 h-3.5" />
               </button>
@@ -182,14 +180,15 @@ export default function Header({
         <div className="sm:hidden flex items-center gap-1.5">
           <button
             onClick={() => setNotifOpen(!notifOpen)}
-            className="p-2 rounded-lg bg-white/80 hover:bg-white text-slate-800 border border-white/90 min-h-[36px] min-w-[36px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-white/80 hover:bg-white text-slate-800 border border-white/90 min-h-[38px] min-w-[38px] flex items-center justify-center relative active:scale-95 transition-transform"
           >
             <Bell className="w-4 h-4 text-slate-800" />
+            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#96a01d] animate-pulse" />
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-slate-950 text-[#96a01d] border border-slate-800 min-h-[36px] min-w-[36px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-slate-950 text-[#96a01d] border border-slate-800 min-h-[38px] min-w-[38px] flex items-center justify-center active:scale-95 transition-transform"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -199,19 +198,19 @@ export default function Header({
 
       {/* Mobile Drawer Overlay */}
       {mobileMenuOpen && (
-        <div className="sm:hidden mt-1.5 glass-strong rounded-xl p-3 border border-white/90 shadow-xl space-y-3 animate-in fade-in z-50">
+        <div className="sm:hidden mt-1.5 glass-strong rounded-2xl p-3.5 border border-white/90 shadow-2xl space-y-3 animate-in fade-in z-50">
           
           {/* User Auth Profile inside Mobile Drawer */}
           {currentUser ? (
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/80 border border-slate-200">
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/90 border border-slate-200">
               <div className="flex items-center gap-2">
-                <span className="text-lg">{currentUser.avatar || '👤'}</span>
+                <span className="text-xl">{currentUser.avatar || '👤'}</span>
                 <div>
                   <div className="font-bold text-slate-900 text-xs flex items-center gap-1">
                     <span>{currentUser.name}</span>
                     {currentUser.isAdmin && <span className="text-[8px] bg-[#96a01d] text-slate-950 font-extrabold px-1 rounded">ADMIN</span>}
                   </div>
-                  <div className="text-[9px] text-slate-500">{currentUser.role}</div>
+                  <div className="text-[10px] text-slate-500">{currentUser.role}</div>
                 </div>
               </div>
               <button
@@ -219,7 +218,7 @@ export default function Header({
                   onLogout();
                   setMobileMenuOpen(false);
                 }}
-                className="px-2.5 py-1 rounded bg-rose-100 text-rose-800 text-[10px] font-bold border border-rose-200"
+                className="px-3 py-1.5 rounded-lg bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200 min-h-[36px] active:scale-95 transition-all"
               >
                 Log Out
               </button>
@@ -230,7 +229,7 @@ export default function Header({
                 onOpenLogin();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 px-3 rounded-lg bg-[#96a01d] text-slate-950 font-extrabold text-xs shadow-xs flex items-center justify-center gap-1"
+              className="w-full py-2.5 px-3 rounded-xl bg-[#96a01d] text-slate-950 font-extrabold text-xs shadow-xs flex items-center justify-center gap-1.5 min-h-[44px]"
             >
               <LogIn className="w-4 h-4" />
               <span>Sign In to Account</span>
@@ -238,23 +237,25 @@ export default function Header({
           )}
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                Active Project
+                Select Active Project
               </span>
               <button
                 onClick={() => {
-                  onOpenNewProject && onOpenNewProject();
+                  if (onOpenNewProject) {
+                    onOpenNewProject();
+                  }
                   setMobileMenuOpen(false);
                 }}
-                className="flex items-center gap-1 text-xs font-extrabold text-slate-950 bg-[#96a01d] px-2 py-0.5 rounded-md"
+                className="flex items-center gap-1 text-xs font-extrabold text-slate-950 bg-[#96a01d] px-2.5 py-1 rounded-lg min-h-[32px] active:scale-95"
               >
-                <Plus className="w-3 h-3" />
+                <Plus className="w-3.5 h-3.5" />
                 <span>New Project</span>
               </button>
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-1.5 max-h-56 overflow-y-auto pr-0.5">
               {projects.map((proj) => (
                 <button
                   key={proj.id}
@@ -262,13 +263,13 @@ export default function Header({
                     onSelectProject(proj);
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left p-2.5 rounded-lg text-xs flex items-center justify-between min-h-[44px] ${
-                    activeProject?.id === proj.id ? 'bg-[#96a01d]/25 font-bold text-slate-950 border border-[#96a01d]/40' : 'bg-white/70 text-slate-700'
+                  className={`w-full text-left p-2.5 rounded-xl text-xs flex items-center justify-between min-h-[44px] transition-all ${
+                    activeProject?.id === proj.id ? 'bg-[#96a01d]/25 font-bold text-slate-950 border border-[#96a01d]/40' : 'bg-white/80 text-slate-700'
                   }`}
                 >
                   <div>
-                    <div className="font-bold">{proj.name}</div>
-                    <div className="text-[9px] text-slate-500">{proj.category}</div>
+                    <div className="font-bold text-xs">{proj.name}</div>
+                    <div className="text-[10px] text-slate-500">{proj.category}</div>
                   </div>
                   {activeProject?.id === proj.id && <Check className="w-4 h-4 text-slate-900 shrink-0" />}
                 </button>
@@ -284,7 +285,7 @@ export default function Header({
                 const next = glowIntensity === 'high' ? 'low' : glowIntensity === 'low' ? 'medium' : 'high';
                 setGlowIntensity(next);
               }}
-              className="px-2.5 py-1 rounded-lg bg-[#96a01d]/20 text-[10px] font-extrabold text-slate-950 border border-[#96a01d]/40 min-h-[32px]"
+              className="px-3 py-1 rounded-lg bg-[#96a01d]/20 text-[10px] font-extrabold text-slate-950 border border-[#96a01d]/40 min-h-[36px] active:scale-95"
             >
               {glowIntensity.toUpperCase()} Glow
             </button>
@@ -296,3 +297,4 @@ export default function Header({
     </header>
   );
 }
+

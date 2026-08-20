@@ -110,8 +110,5 @@ export const INITIAL_APPLICATIONS = [
 ];
 
 export const TEAM_MEMBERS = [
-  { name: 'Silambarasan', role: 'Lead Architect', avatar: '👤', status: 'Online' },
-  { name: 'Ananya Sharma', role: 'Senior QA Engineer', avatar: '👩‍🔬', status: 'In Code Review' },
-  { name: 'Rajesh Kumar', role: 'Full Stack Developer', avatar: '👨‍💻', status: 'Active Sprint' },
-  { name: 'Priya Nair', role: 'UI/UX Product Designer', avatar: '🎨', status: 'Designing' },
+  { name: 'Silambarasan', role: 'Lead Architect', avatar: '👨‍💻', status: 'Online' }
 ];

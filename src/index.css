@@ -1,10 +1,32 @@
 @import "tailwindcss";
 
 html {
-  font-size: 13.5px; /* Screen-fit desktop font scale baseline */
+  font-size: 13.5px; /* Base desktop font scale */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 14px; /* Slightly larger legible text scale on mobile viewports */
+  }
 }
 
 @layer utilities {
+  /* Hide scrollbars while maintaining scroll functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Safe Area Bottom Padding for mobile navigation notch & gesture bar */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0.75rem));
+  }
+
   /* Ultra-Compact Screen-Fit Frosted Glass System - #96a01d Theme */
   .glass {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.52) 100%);
@@ -42,7 +64,7 @@ html {
   }
 
   .glass-nav {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.60) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.68) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.85);
@@ -86,7 +108,7 @@ html {
   }
 
   .glass-input {
-    background: rgba(255, 255, 255, 0.70);
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.85);
@@ -126,8 +148,8 @@ html {
 
 /* Custom Glass Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.4);
@@ -139,3 +161,4 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(150, 160, 29, 0.85);
 }
+

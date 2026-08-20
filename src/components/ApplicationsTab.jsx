@@ -39,25 +39,25 @@ export default function ApplicationsTab({ applications, onOpenAppModal, showToas
         </div>
 
         {/* Search & Filter Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           
           {/* Search Box */}
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full sm:w-64">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search applications..."
-              className="w-full glass-input rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[36px]"
+              className="w-full glass-input rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[40px]"
             />
           </div>
 
           {/* Environment Filter */}
-          <div className="flex items-center gap-1 glass p-0.5 rounded-lg text-xs bg-white/70">
+          <div className="flex items-center gap-1 glass p-1 rounded-xl text-xs bg-white/70 overflow-x-auto no-scrollbar justify-between sm:justify-start">
             <button
               onClick={() => setFilterEnv('all')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterEnv === 'all' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -65,7 +65,7 @@ export default function ApplicationsTab({ applications, onOpenAppModal, showToas
             </button>
             <button
               onClick={() => setFilterEnv('production')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterEnv === 'production' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -73,7 +73,7 @@ export default function ApplicationsTab({ applications, onOpenAppModal, showToas
             </button>
             <button
               onClick={() => setFilterEnv('staging')}
-              className={`px-2.5 py-1 rounded font-bold text-[11px] transition-all min-h-[30px] ${
+              className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all min-h-[32px] flex-1 sm:flex-none text-center ${
                 filterEnv === 'staging' ? 'bg-[#96a01d] text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >

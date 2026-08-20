@@ -69,24 +69,24 @@ export default function DashboardHero({ project }) {
           </div>
 
           {/* Right Progress Widget */}
-          <div className="glass-card rounded-lg p-2.5 border border-white/80 min-w-[200px] sm:min-w-[230px] shrink-0 bg-white/70 backdrop-blur-xs">
+          <div className="glass-card rounded-lg p-2.5 sm:p-3 border border-white/80 w-full lg:w-auto min-w-full sm:min-w-[230px] shrink-0 bg-white/70 backdrop-blur-xs">
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#96a01d] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#96a01d]"></span>
                 </span>
-                <span className="text-[10px] font-extrabold text-slate-900 uppercase tracking-wide">
+                <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-900 uppercase tracking-wide">
                   {stageLabel}
                 </span>
               </div>
-              <span className="text-[11px] font-extrabold text-slate-900 font-mono">
+              <span className="text-xs sm:text-sm font-extrabold text-slate-900 font-mono">
                 {progressPct}%
               </span>
             </div>
 
             {/* Custom Progress Bar */}
-            <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden p-0.5 border border-white shadow-inner">
+            <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden p-0.5 border border-white shadow-inner">
               <div
                 className="h-full bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] rounded-full transition-all duration-400 shadow-xs shadow-[#96a01d]/40 relative"
                 style={{ width: `${progressPct}%` }}

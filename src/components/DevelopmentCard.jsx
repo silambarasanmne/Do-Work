@@ -144,7 +144,7 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
           {/* Editable Development Link Section */}
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-700 block">
+              <label className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-700 block">
                 Development Link (Editable)
               </label>
               <button
@@ -155,23 +155,23 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
                     setIsEditingUrl(true);
                   }
                 }}
-                className="text-[9px] font-bold px-2 py-0.5 rounded bg-[#96a01d]/20 hover:bg-[#96a01d]/35 text-slate-950 border border-[#96a01d]/40 flex items-center gap-1"
+                className="text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-md bg-[#96a01d]/20 hover:bg-[#96a01d]/35 text-slate-950 border border-[#96a01d]/40 flex items-center gap-1 min-h-[30px]"
               >
                 {isEditingUrl ? (
                   <>
-                    <Save className="w-2.5 h-2.5 text-emerald-700" />
+                    <Save className="w-3 h-3 text-emerald-700" />
                     <span>Save Link</span>
                   </>
                 ) : (
                   <>
-                    <Edit3 className="w-2.5 h-2.5" />
+                    <Edit3 className="w-3 h-3" />
                     <span>Edit Link</span>
                   </>
                 )}
               </button>
             </div>
 
-            <div className="glass-input rounded-lg p-1.5 flex items-center justify-between gap-1.5 border border-white/90 shadow-xs text-[11px]">
+            <div className="glass-input rounded-xl p-2 flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-2 border border-white/90 shadow-xs text-xs">
               {isEditingUrl ? (
                 <input
                   type="text"
@@ -182,20 +182,20 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
                   }}
                   autoFocus
                   placeholder="https://your-dev-url.com"
-                  className="w-full bg-white/90 rounded px-2 py-1 text-xs text-slate-900 font-mono font-bold focus:outline-none border border-[#96a01d]"
+                  className="w-full bg-white/90 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-mono font-bold focus:outline-none border border-[#96a01d] min-h-[36px]"
                 />
               ) : (
-                <div className="flex items-center gap-1 text-[11px] font-mono text-slate-800 truncate pl-1">
+                <div className="flex items-center gap-1 text-xs font-mono text-slate-800 truncate pl-1">
                   <span className="text-amber-500">🔗</span>
-                  <span className="truncate font-semibold">{devUrlInput}</span>
+                  <span className="truncate font-semibold text-[11px] sm:text-xs">{devUrlInput}</span>
                 </div>
               )}
 
-              <div className="flex items-center gap-1 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0 self-end xs:self-auto">
                 {isEditingUrl ? (
                   <button
                     onClick={handleSaveUrl}
-                    className="p-1 rounded bg-[#96a01d] text-slate-950 border border-[#96a01d] shadow-xs text-[10px] font-extrabold px-2 min-h-[30px]"
+                    className="p-1.5 rounded-lg bg-[#96a01d] text-slate-950 border border-[#96a01d] shadow-xs text-xs font-extrabold px-3 min-h-[36px]"
                   >
                     Save
                   </button>
@@ -203,10 +203,10 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
                   <>
                     <button
                       onClick={handleCopy}
-                      className="p-1.5 rounded bg-white/90 hover:bg-white text-slate-700 border border-slate-200/80 shadow-xs min-h-[32px] min-w-[32px] flex items-center justify-center"
+                      className="p-2 rounded-lg bg-white/90 hover:bg-white text-slate-700 border border-slate-200/80 shadow-xs min-h-[36px] min-w-[36px] flex items-center justify-center"
                       title="Copy link"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-600" />}
+                      {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-600" />}
                     </button>
                     <a
                       href={devUrlInput}
@@ -216,10 +216,10 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
                         e.preventDefault();
                         showToast('Opening Link', `Redirecting to ${devUrlInput}`, 'info');
                       }}
-                      className="p-1.5 rounded bg-[#96a01d]/20 hover:bg-[#96a01d]/35 text-slate-950 border border-[#96a01d]/40 shadow-xs flex items-center gap-1 text-[10px] font-extrabold px-2.5 min-h-[32px]"
+                      className="p-1.5 rounded-lg bg-[#96a01d]/20 hover:bg-[#96a01d]/35 text-slate-950 border border-[#96a01d]/40 shadow-xs flex items-center gap-1 text-xs font-extrabold px-3 min-h-[36px]"
                     >
                       <span>Launch</span>
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </>
                 )}
@@ -243,9 +243,9 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
                 </span>
               </div>
 
-              <div className="bg-slate-950 text-[#96a01d] font-mono text-[10px] p-2 rounded-md space-y-0.5 shadow-inner max-h-24 overflow-y-auto border border-slate-800">
+              <div className="bg-slate-950 text-[#96a01d] font-mono text-[10px] p-2.5 rounded-lg space-y-1 shadow-inner max-h-28 overflow-y-auto border border-slate-800 break-all">
                 {buildLogs.map((log, idx) => (
-                  <p key={idx} className="leading-tight opacity-90">
+                  <p key={idx} className="leading-snug opacity-90">
                     {log}
                   </p>
                 ))}
@@ -259,9 +259,9 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
               </span>
               <div className="space-y-1">
                 {project.commits.map((c) => (
-                  <div key={c.id} className="flex items-center justify-between text-[10px] bg-white/50 p-1.5 rounded border border-white/70">
-                    <div className="flex items-center gap-1 truncate">
-                      <span className="font-mono text-slate-900 font-bold text-[9px] bg-[#96a01d]/30 px-1 py-0.2 rounded border border-[#96a01d]/40">
+                  <div key={c.id} className="flex items-center justify-between text-[10px] bg-white/50 p-1.5 rounded-lg border border-white/70">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <span className="font-mono text-slate-900 font-bold text-[9px] bg-[#96a01d]/30 px-1 py-0.2 rounded border border-[#96a01d]/40 shrink-0">
                         {c.hash}
                       </span>
                       <span className="truncate text-slate-700 font-medium text-[10px]">{c.message}</span>
@@ -281,7 +281,7 @@ export default function DevelopmentCard({ project, onFinishDev, onUpdateDevProgr
       <div className="pt-2 border-t border-slate-200/60 flex justify-center">
         <button
           onClick={onFinishDev}
-          className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 min-h-[44px] transition-all duration-200 flex items-center justify-center gap-1.5 group"
+          className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs sm:text-sm shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 min-h-[44px] transition-all duration-200 flex items-center justify-center gap-2 group"
         >
           <span>Finish Development</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

@@ -71,6 +71,10 @@ export default function App() {
     setEmployees(prev => prev.map(e => e.id === empId ? { ...e, status: e.status === 'Active' ? 'Inactive' : 'Active' } : e));
   };
 
+  const handleDeleteEmployee = (empId) => {
+    setEmployees(prev => prev.filter(e => e.id !== empId));
+  };
+
   // Update active project helper function
   const updateProject = (updatedFields) => {
     setProjects(prev => prev.map(p => p.id === activeProject.id ? { ...p, ...updatedFields } : p));
@@ -177,7 +181,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-white via-[#fcfde9] to-[#fffdf7] text-slate-800 relative selection:bg-[#96a01d] selection:text-slate-950 pb-16 sm:pb-4 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-white via-[#fcfde9] to-[#fffdf7] text-slate-800 relative selection:bg-[#96a01d] selection:text-slate-950 pb-24 sm:pb-6 overflow-x-hidden">
       
       {/* Background Soft #96a01d Ambient Lighting & Blurred Floating Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -265,6 +269,7 @@ export default function App() {
               <LoginPage
                 onLogin={handleLogin}
                 showToast={showToast}
+                employees={employees}
               />
             )}
 
@@ -375,6 +380,7 @@ export default function App() {
                 onAddEmployee={handleAddEmployee}
                 onUpdateEmployee={handleUpdateEmployee}
                 onToggleStatus={handleToggleEmployeeStatus}
+                onDeleteEmployee={handleDeleteEmployee}
                 currentUser={currentUser}
                 showToast={showToast}
               />

@@ -22,22 +22,22 @@ export default function ProjectsTab({ projects, onSelectProject, onOpenNewProjec
           <p className="text-[10px] text-slate-500 font-medium">Manage project lifecycles, sprints, and release pipelines</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Search Box */}
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full sm:w-64">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search projects..."
-              className="w-full glass-input rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[36px]"
+              className="w-full glass-input rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 font-medium min-h-[40px]"
             />
           </div>
 
           <button
             onClick={onOpenNewProjectModal}
-            className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 transition-all flex items-center gap-1 min-h-[36px]"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#96a01d] via-[#a8b422] to-[#7a8315] text-slate-950 font-extrabold text-xs shadow-xs shadow-[#96a01d]/30 hover:scale-[1.005] active:scale-95 transition-all flex items-center justify-center gap-1.5 min-h-[40px]"
           >
             <Plus className="w-4 h-4" />
             <span>Create Project</span>

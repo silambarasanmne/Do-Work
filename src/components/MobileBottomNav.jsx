@@ -4,21 +4,18 @@ import { LayoutGrid, Cpu, Smartphone, Users, Plus } from 'lucide-react';
 export default function MobileBottomNav({ 
   activeTab, 
   onTabChange, 
-  onOpenNewProject,
-  appCount = 4,
-  projectCount = 3,
-  employeeCount = 5 
+  onOpenNewProject
 }) {
   const tabs = [
     { id: 'projects', label: 'Projects', icon: LayoutGrid },
     { id: 'workspace', label: 'Workspace', icon: Cpu },
     { id: 'applications', label: 'Apps', icon: Smartphone },
-    { id: 'employees', label: 'Employees', icon: Users }
+    { id: 'employees', label: 'Team', icon: Users }
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden px-2 pb-2 pt-1 pointer-events-none">
-      <div className="glass-nav rounded-2xl p-1 shadow-2xl border border-white/90 flex items-center justify-around pointer-events-auto bg-white/90 backdrop-blur-2xl">
+    <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden px-2.5 pb-2 pt-1 pointer-events-none pb-safe">
+      <div className="glass-nav rounded-2xl p-1 shadow-2xl border border-white/90 flex items-center justify-around pointer-events-auto bg-white/95 backdrop-blur-2xl">
         
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -44,7 +41,7 @@ export default function MobileBottomNav({
         <button
           onClick={onOpenNewProject}
           title="Create New Project"
-          className="w-10 h-10 rounded-xl bg-slate-950 text-[#96a01d] flex items-center justify-center shadow-lg shadow-slate-900/30 active:scale-95 transition-transform shrink-0 ml-0.5 font-bold"
+          className="w-11 h-11 rounded-xl bg-slate-950 text-[#96a01d] flex items-center justify-center shadow-lg shadow-slate-900/30 active:scale-95 transition-transform shrink-0 ml-0.5 font-bold"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -53,3 +50,4 @@ export default function MobileBottomNav({
     </div>
   );
 }
+

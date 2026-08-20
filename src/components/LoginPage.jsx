@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, KeyRound, Sparkles, ArrowRight, UserCheck } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
 
-export default function LoginPage({ onLogin, showToast }) {
+export default function LoginPage({ onLogin, showToast, employees = [] }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,11 @@ export default function LoginPage({ onLogin, showToast }) {
     setTimeout(() => {
       setIsLoading(false);
 
-      if (email === 'silam@agam.com' && password === 'admin123') {
+      const matchedEmp = employees.find(
+        emp => emp.email.toLowerCase() === email.trim().toLowerCase() && (emp.password === password || (!emp.password && (password === 'admin123' || password === 'dev123')))
+      );
+
+      if (email.trim().toLowerCase() === 'silam@agam.com' && password === 'admin123') {
         const user = {
           name: 'Silambarasan',
           email: 'silam@agam.com',
@@ -32,7 +36,17 @@ export default function LoginPage({ onLogin, showToast }) {
         };
         onLogin(user);
         showToast('Login Successful', 'Welcome back, Silambarasan (Admin)', 'success');
-      } else if (email === 'dev@agam.com' && password === 'dev123') {
+      } else if (matchedEmp) {
+        const user = {
+          name: matchedEmp.name,
+          email: matchedEmp.email,
+          role: matchedEmp.role,
+          isAdmin: matchedEmp.role.toLowerCase().includes('architect') || matchedEmp.role.toLowerCase().includes('lead') || matchedEmp.role.toLowerCase().includes('admin'),
+          avatar: matchedEmp.avatar || '👤'
+        };
+        onLogin(user);
+        showToast('Login Successful', `Welcome back, ${matchedEmp.name}`, 'success');
+      } else if (email.trim().toLowerCase() === 'dev@agam.com' && password === 'dev123') {
         const user = {
           name: 'Ananya Sharma',
           email: 'dev@agam.com',
@@ -43,21 +57,9 @@ export default function LoginPage({ onLogin, showToast }) {
         onLogin(user);
         showToast('Login Successful', 'Welcome back, Ananya Sharma', 'success');
       } else {
-        setError('Invalid Email or Password. Try quick demo logins below.');
+        setError('Invalid Email or Password. Please check your credentials.');
       }
     }, 600);
-  };
-
-  const fillDemoAdmin = () => {
-    setEmail('silam@agam.com');
-    setPassword('admin123');
-    setError('');
-  };
-
-  const fillDemoDev = () => {
-    setEmail('dev@agam.com');
-    setPassword('dev123');
-    setError('');
   };
 
   return (
@@ -153,37 +155,6 @@ export default function LoginPage({ onLogin, showToast }) {
             )}
           </button>
         </form>
-
-        {/* Demo Quick Logins Box */}
-        <div className="mt-6 pt-4 border-t border-slate-200/60 text-center space-y-2">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-            ⚡ Quick Demo Logins
-          </span>
-
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={fillDemoAdmin}
-              type="button"
-              className="p-2 rounded-xl glass hover:bg-white text-left border border-slate-200 transition-all text-xs"
-            >
-              <div className="font-extrabold text-slate-900 flex items-center gap-1">
-                <span>👑 Admin</span>
-              </div>
-              <div className="text-[9px] text-slate-500 truncate">silam@agam.com</div>
-            </button>
-
-            <button
-              onClick={fillDemoDev}
-              type="button"
-              className="p-2 rounded-xl glass hover:bg-white text-left border border-slate-200 transition-all text-xs"
-            >
-              <div className="font-extrabold text-slate-900 flex items-center gap-1">
-                <span>👩‍💻 QA Dev</span>
-              </div>
-              <div className="text-[9px] text-slate-500 truncate">dev@agam.com</div>
-            </button>
-          </div>
-        </div>
 
       </div>
     </div>

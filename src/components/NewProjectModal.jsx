@@ -17,9 +17,10 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject, empl
     if (!name.trim()) return;
 
     const selectedDevName = developer || (activeEmployees[0]?.name || 'Silambarasan');
+    const currentTimestamp = new Date().getTime();
 
     const newProj = {
-      id: `proj-${Date.now()}`,
+      id: `proj-${currentTimestamp}`,
       name,
       key: key.toUpperCase() || name.substring(0, 3).toUpperCase(),
       category,
@@ -35,7 +36,7 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject, empl
       testStats: { total: 10, passed: 0, failed: 0 },
       testCases: [],
       commits: [
-        { id: `c-${Date.now()}`, hash: '001a2b3', message: 'initial repo commit', author: selectedDevName, date: 'Just now' }
+        { id: `c-${currentTimestamp}`, hash: '001a2b3', message: 'initial repo commit', author: selectedDevName, date: 'Just now' }
       ]
     };
 
